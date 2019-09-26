@@ -1,4 +1,5 @@
 from graph import *
+from math import *
 
 windowSize(1760, 769)
 canvasSize(1760, 769)
@@ -22,9 +23,10 @@ def Main_Body(color, shift_from_left_guy):
     circle(463 + shift_from_left_guy, 769, 300)
 
 def Head(shift_from_left_guy):
+    a = shift_from_left_guy
     brushColor(233, 200, 176)
     penColor(200, 200, 200)
-    circle(463, 384, 200)
+    circle(463 + a, 384, 200)
     penColor(0, 0, 0)
     
 def Eyes(color_red, color_green, color_blue, shift_from_left_guy):
@@ -44,24 +46,36 @@ def Nose_And_Mouth(shift_from_left_guy):
     brushColor('red')
     polygon([(333 + a, 454), (613 + a, 454), (463 + a, 534)])
     
+def Left_Arm(length, angle, shift_from_left_guy):
+    a = shift_from_left_guy
+    brushColor(233, 200, 176)
+    penColor(200, 200, 200)
+    polygon([(230 + a, 569), (270 + a, 549), (270 - length * cos(angle) + a, 549 + length * sin (angle)), (230 - length * cos(angle) + a, 569 + length * sin(angle))])
+    penColor('white')
+    circle((270 - length * cos(angle) + a + 230 - length * cos(angle) + a)/2, (549 + length * sin (angle) + 569 + length * sin(angle))/2, 40)
+    
+def Right_Arm(length, angle, shift_from_left_guy):
+    a = shift_from_left_guy
+    brushColor(233, 200, 176)
+    penColor(200, 200, 200) 
+    polygon([(630 + a, 549), (670 + a, 569), (670 + length * cos(angle) + a, 569 - length * sin (angle)), (630 + length * cos(angle) + a, 549 - length * sin (angle))])
+    penColor('white')
+    circle((670 + length * cos(angle) + a + 630 + length * cos(angle) + a)/2, (569 - length * sin (angle) + 549 - length * sin (angle))/2, 40)
+    
 #left guy start
-Main_body('orange', 0)
+Main_Body('orange', 0)
 
 Head(0)
 
-Eyers(100, 100, 255, 0)
+Eyes(100, 100, 255, 0)
 
 Nose_And_Mouth(0)
 
+Left_Arm(409, 4.936, 0)
 
-brushColor(233, 200, 176)
-penColor(200, 200, 200)
-polygon([(230, 569), (270, 549), (180, 150), (140, 130)])
-polygon([(630, 549), (670, 569), (880, 150), (840, 130)])
+Right_Arm(469, 1.106, 0)
 
-penColor('white')
-circle(160, 115, 40)
-circle(870, 115, 40)
+
 
 
 penColor('black')
@@ -81,15 +95,9 @@ Eyes(191, 200, 183, 800)
 
 Nose_And_Mouth(800)
 
-brushColor(233, 200, 176)
-penColor(200, 200, 200)
-polygon([(1030, 569), (1070, 549), (980, 150), (940, 130)])
-polygon([(1430, 549), (1470, 569), (1680, 150), (1640, 130)])
+Left_Arm(409, 4.936, 800)
 
-penColor('white')
-circle(960, 115, 40)
-circle(1670, 115, 40)
-
+Right_Arm(469, 1.106, 800)
 
 penColor('black')
 brushColor('green')
