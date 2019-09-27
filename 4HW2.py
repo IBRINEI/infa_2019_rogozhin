@@ -18,21 +18,21 @@ def Hair(color, shift_from_left_guy):
     polygon([(576 + a, 206), (621 + a, 253), (615 + a, 182)])
     polygon([(608 + a, 235), (644 + a, 289), (674 + a, 218)])
 
-    
+
 def Main_Body(color, shift_from_left_guy):
     penColor(color)
     brushColor(color)
     circle(463 + shift_from_left_guy, 769, 300)
 
-    
+
 def Head(shift_from_left_guy):
     a = shift_from_left_guy
     brushColor(233, 200, 176)
     penColor(200, 200, 200)
     circle(463 + a, 384, 200)
     penColor(0, 0, 0)
-    
-    
+
+
 def Eyes(color_red, color_green, color_blue, shift_from_left_guy):
     brushColor(color_red, color_green, color_blue)
     penColor('black')
@@ -41,8 +41,8 @@ def Eyes(color_red, color_green, color_blue, shift_from_left_guy):
     brushColor('black')
     circle(528 + shift_from_left_guy, 349, 10)
     circle(398 + shift_from_left_guy, 349, 10)
-    
-    
+
+
 def Nose_And_Mouth(shift_from_left_guy):
     a = shift_from_left_guy
     brushColor('brown')
@@ -50,8 +50,8 @@ def Nose_And_Mouth(shift_from_left_guy):
     #Nose is above; mouth is below
     brushColor('red')
     polygon([(333 + a, 454), (613 + a, 454), (463 + a, 534)])
-    
-    
+
+
 def Left_Arm(length, angle, shift_from_left_guy):
     a = shift_from_left_guy
     brushColor(233, 200, 176)
@@ -59,8 +59,8 @@ def Left_Arm(length, angle, shift_from_left_guy):
     polygon([(230 + a, 569), (270 + a, 549), (270 - length * cos(angle) + a, 549 + length * sin (angle)), (230 - length * cos(angle) + a, 569 + length * sin(angle))])
     penColor('white')
     circle((270 - length * cos(angle) + a + 230 - length * cos(angle) + a)/2, (549 + length * sin (angle) + 569 + length * sin(angle))/2, 40)
-    
-    
+
+
 def Right_Arm(length, angle, shift_from_left_guy):
     a = shift_from_left_guy
     brushColor(233, 200, 176)
@@ -68,8 +68,8 @@ def Right_Arm(length, angle, shift_from_left_guy):
     polygon([(630 + a, 549), (670 + a, 569), (670 + length * cos(angle) + a, 569 - length * sin (angle)), (630 + length * cos(angle) + a, 549 - length * sin (angle))])
     penColor('white')
     circle((670 + length * cos(angle) + a + 630 + length * cos(angle) + a)/2, (569 - length * sin (angle) + 549 - length * sin (angle))/2, 40)
-    
-    
+
+
 #left guy start
 Main_Body('orange', 0)
 
