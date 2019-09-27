@@ -47,7 +47,7 @@ def Nose_And_Mouth(shift_from_left_guy):
     a = shift_from_left_guy
     brushColor('brown')
     polygon([(483 + a, 394), (443 + a, 394), (463 + a, 424)])
-    #Nose is above; mouth is below
+    # Nose is above; mouth is below
     brushColor('red')
     polygon([(333 + a, 454), (613 + a, 454), (463 + a, 534)])
 
@@ -70,7 +70,7 @@ def Right_Arm(length, angle, shift_from_left_guy):
     circle((670 + length * cos(angle) + a + 630 + length * cos(angle) + a)/2, (569 - length * sin (angle) + 549 - length * sin (angle))/2, 40)
 
 
-#left guy start
+# left guy start
 Main_Body('orange', 0)
 
 Head(0)
@@ -92,9 +92,9 @@ polygon([(300, 629), (220, 629), (210, 539), (280, 489), (320, 549)])
 polygon([(700, 629), (620, 629), (610, 539), (680, 489), (720, 549)])
 
 Hair('purple', 0)
-#left guy end
+# left guy end
 
-#second guy start
+# second guy start
 Main_Body('green', 800)
 
 Head(800)
@@ -113,10 +113,10 @@ polygon([(1100, 629), (1020, 629), (1010, 539), (1080, 489), (1120, 549)])
 polygon([(1500, 629), (1420, 629), (1410, 539), (1480, 489), (1520, 549)])
 
 Hair('yellow', 800)
-#second guy end
+# second guy end
 brushColor('black')
 
-#label on top; may not work with old OS/PC
+# label on top; may not work with old OS/PC
 label('PYTHON is REALLY AMAZING!', 00, 00, font=('Arial 32', 90, 'bold'), bg='green', foreground='black')
 
 run()
