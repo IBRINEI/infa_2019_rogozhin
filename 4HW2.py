@@ -56,18 +56,28 @@ def left_arm(length, angle, shift_from_left_guy):
     a = shift_from_left_guy
     brushColor(233, 200, 176)
     penColor(200, 200, 200)
-    polygon([(230 + a, 569), (270 + a, 549), (270 - length * cos(angle) + a, 549 + length * sin (angle)), (230 - length * cos(angle) + a, 569 + length * sin(angle))])
+    polygon([(230 + a, 569),
+             (270 + a, 549),
+             (270 - length * cos(angle) + a,
+              549 + length * sin(angle)),
+             (230 - length * cos(angle) + a,
+              569 + length * sin(angle))])
     penColor('white')
-    circle((270 - length * cos(angle) + a + 230 - length * cos(angle) + a)/2, (549 + length * sin (angle) + 569 + length * sin(angle))/2, 40)
+    circle((270 - length * cos(angle) + a + 230 - length * cos(angle) + a)/2,
+           (549 + length * sin(angle) + 569 + length * sin(angle))/2, 40)
 
 
 def right_arm(length, angle, shift_from_left_guy):
     a = shift_from_left_guy
     brushColor(233, 200, 176)
-    penColor(200, 200, 200) 
-    polygon([(630 + a, 549), (670 + a, 569), (670 + length * cos(angle) + a, 569 - length * sin (angle)), (630 + length * cos(angle) + a, 549 - length * sin (angle))])
+    penColor(200, 200, 200)
+    polygon([(630 + a, 549), (670 + a, 569),
+             (670 + length * cos(angle) + a,
+              569 - length * sin(angle)),
+             (630 + length * cos(angle) + a, 549 - length * sin(angle))])
     penColor('white')
-    circle((670 + length * cos(angle) + a + 630 + length * cos(angle) + a)/2, (569 - length * sin (angle) + 549 - length * sin (angle))/2, 40)
+    circle((670 + length * cos(angle) + a + 630 + length * cos(angle) + a)/2,
+           (569 - length * sin(angle) + 549 - length * sin(angle))/2, 40)
 
 
 # left guy start
@@ -82,8 +92,6 @@ nose_and_mouth(0)
 left_arm(409, 4.936, 0)
 
 right_arm(469, 1.106, 0)
-
-
 
 
 penColor('black')
@@ -117,6 +125,9 @@ hair('yellow', 800)
 brushColor('black')
 
 # label on top; may not work with old OS/PC
-label('PYTHON is REALLY AMAZING!', 00, 00, font=('Arial 32', 90, 'bold'), bg='green', foreground='black')
+label('PYTHON is REALLY AMAZING!', 00, 00,
+      font=('Arial 32', 90, 'bold'),
+      bg='green',
+      foreground='black')
 
 run()
