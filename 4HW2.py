@@ -5,7 +5,7 @@ windowSize(1760, 769)
 canvasSize(1760, 769)
 
 
-def Hair(color, shift_from_left_guy):
+def hair(color, shift_from_left_guy):
     brushColor(color)
     a = shift_from_left_guy
     polygon([(293 + a, 275), (336 + a, 219), (267 + a, 205)])
@@ -19,13 +19,13 @@ def Hair(color, shift_from_left_guy):
     polygon([(608 + a, 235), (644 + a, 289), (674 + a, 218)])
 
 
-def Main_Body(color, shift_from_left_guy):
+def main_body(color, shift_from_left_guy):
     penColor(color)
     brushColor(color)
     circle(463 + shift_from_left_guy, 769, 300)
 
 
-def Head(shift_from_left_guy):
+def head(shift_from_left_guy):
     a = shift_from_left_guy
     brushColor(233, 200, 176)
     penColor(200, 200, 200)
@@ -33,7 +33,7 @@ def Head(shift_from_left_guy):
     penColor(0, 0, 0)
 
 
-def Eyes(color_red, color_green, color_blue, shift_from_left_guy):
+def eyes(color_red, color_green, color_blue, shift_from_left_guy):
     brushColor(color_red, color_green, color_blue)
     penColor('black')
     circle(528 + shift_from_left_guy, 349, 35)
@@ -43,7 +43,7 @@ def Eyes(color_red, color_green, color_blue, shift_from_left_guy):
     circle(398 + shift_from_left_guy, 349, 10)
 
 
-def Nose_And_Mouth(shift_from_left_guy):
+def nose_and_mouth(shift_from_left_guy):
     a = shift_from_left_guy
     brushColor('brown')
     polygon([(483 + a, 394), (443 + a, 394), (463 + a, 424)])
@@ -52,7 +52,7 @@ def Nose_And_Mouth(shift_from_left_guy):
     polygon([(333 + a, 454), (613 + a, 454), (463 + a, 534)])
 
 
-def Left_Arm(length, angle, shift_from_left_guy):
+def left_arm(length, angle, shift_from_left_guy):
     a = shift_from_left_guy
     brushColor(233, 200, 176)
     penColor(200, 200, 200)
@@ -61,7 +61,7 @@ def Left_Arm(length, angle, shift_from_left_guy):
     circle((270 - length * cos(angle) + a + 230 - length * cos(angle) + a)/2, (549 + length * sin (angle) + 569 + length * sin(angle))/2, 40)
 
 
-def Right_Arm(length, angle, shift_from_left_guy):
+def right_arm(length, angle, shift_from_left_guy):
     a = shift_from_left_guy
     brushColor(233, 200, 176)
     penColor(200, 200, 200) 
@@ -71,17 +71,17 @@ def Right_Arm(length, angle, shift_from_left_guy):
 
 
 # left guy start
-Main_Body('orange', 0)
+main_body('orange', 0)
 
-Head(0)
+head(0)
 
-Eyes(100, 100, 255, 0)
+eyes(100, 100, 255, 0)
 
-Nose_And_Mouth(0)
+nose_and_mouth(0)
 
-Left_Arm(409, 4.936, 0)
+left_arm(409, 4.936, 0)
 
-Right_Arm(469, 1.106, 0)
+right_arm(469, 1.106, 0)
 
 
 
@@ -91,28 +91,28 @@ brushColor('orange')
 polygon([(300, 629), (220, 629), (210, 539), (280, 489), (320, 549)])
 polygon([(700, 629), (620, 629), (610, 539), (680, 489), (720, 549)])
 
-Hair('purple', 0)
+hair('purple', 0)
 # left guy end
 
 # second guy start
-Main_Body('green', 800)
+main_body('green', 800)
 
-Head(800)
+head(800)
 
-Eyes(191, 200, 183, 800)
+eyes(191, 200, 183, 800)
 
-Nose_And_Mouth(800)
+nose_and_mouth(800)
 
-Left_Arm(409, 4.936, 800)
+left_arm(409, 4.936, 800)
 
-Right_Arm(469, 1.106, 800)
+right_arm(469, 1.106, 800)
 
 penColor('black')
 brushColor('green')
 polygon([(1100, 629), (1020, 629), (1010, 539), (1080, 489), (1120, 549)])
 polygon([(1500, 629), (1420, 629), (1410, 539), (1480, 489), (1520, 549)])
 
-Hair('yellow', 800)
+hair('yellow', 800)
 # second guy end
 brushColor('black')
 
