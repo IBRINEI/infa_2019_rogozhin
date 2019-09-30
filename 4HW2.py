@@ -3,6 +3,7 @@ from graph import brushColor, penColor
 from graph import polygon, circle, label
 from math import sin, cos
 
+
 windowSize(1760, 769)
 canvasSize(1760, 769)
 
