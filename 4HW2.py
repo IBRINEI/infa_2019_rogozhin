@@ -27,14 +27,14 @@ def main_body(color, x_coord):
     circle(x_coord, 769, 300)
 
 
-def head(x_coord, r, g, b):
+def head(x_coord, r, g, b, hair_color):
     brushColor(233, 200, 176)
     penColor(200, 200, 200)
     circle(x_coord, 384, 200)
     penColor(0, 0, 0)
     eyes(r, g, b, x_coord)
     nose_and_mouth(x_coord)
-    hair(x_coord)
+    hair(hair_color, x_coord)
 
 
 def eyes(color_red, color_green, color_blue, x_coord):
@@ -80,6 +80,17 @@ def right_arm(length, angle, x_coord):
     penColor('white')
     circle((2 * x_coord + length * cos(angle) + 207 + length * cos(angle) + 167)/2,
            (569 - length * sin(angle) + 549 - length * sin(angle))/2, 40)
+
+
+def guy(x_coord, body_color, hair_color, r, g, b, al, ll, ar, lr):
+    # x_coord - x coordinate of the body circle center
+    # r,g,b - eye color
+    # ll,lr - lenght left/right
+    # al, ar - angle left/right in radians
+    main_body(body_color, x_coord)
+    head(x_coord, r, g, b, hair_color)
+    left_arm(ll, al, x_coord)
+    right_arm(lr, ar, x_coord)
 
 
 # left guy start
