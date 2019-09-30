@@ -1,5 +1,7 @@
-from graph import *
-from math import *
+from graph import windowSize, canvasSize
+from graph import brushColor, penColor
+from graph import polygon, circle, label
+from math import sin, cos
 
 windowSize(1760, 769)
 canvasSize(1760, 769)
@@ -19,37 +21,38 @@ def hair(color, shift_from_left_guy):
     polygon([(608 + a, 235), (644 + a, 289), (674 + a, 218)])
 
 
-def main_body(color, shift_from_left_guy):
+def main_body(color, x_coord):
     penColor(color)
     brushColor(color)
-    circle(463 + shift_from_left_guy, 769, 300)
+    circle(x_coord, 769, 300)
 
 
-def head(shift_from_left_guy):
-    a = shift_from_left_guy
+def head(x_coord, r, g, b):
     brushColor(233, 200, 176)
     penColor(200, 200, 200)
-    circle(463 + a, 384, 200)
+    circle(x_coord, 384, 200)
     penColor(0, 0, 0)
+    eyes(r, g, b, x_coord)
+    nose_and_mouth(x_coord)
+    hair(x_coord)
 
 
-def eyes(color_red, color_green, color_blue, shift_from_left_guy):
+def eyes(color_red, color_green, color_blue, x_coord):
     brushColor(color_red, color_green, color_blue)
     penColor('black')
-    circle(528 + shift_from_left_guy, 349, 35)
-    circle(398 + shift_from_left_guy, 349, 35)
+    circle(x_coord + 65, 349, 35)
+    circle(x_coord - 65, 349, 35)
     brushColor('black')
-    circle(528 + shift_from_left_guy, 349, 10)
-    circle(398 + shift_from_left_guy, 349, 10)
+    circle(x_coord + 65, 349, 10)
+    circle(x_coord - 65, 349, 10)
 
 
-def nose_and_mouth(shift_from_left_guy):
-    a = shift_from_left_guy
+def nose_and_mouth(x_coord):
     brushColor('brown')
-    polygon([(483 + a, 394), (443 + a, 394), (463 + a, 424)])
+    polygon([(x_coord + 20, 394), (x_coord - 20, 394), (x_coord, 424)])
     # Nose is above; mouth is below
     brushColor('red')
-    polygon([(333 + a, 454), (613 + a, 454), (463 + a, 534)])
+    polygon([(x_coord - 130, 454), (x_coord + 150, 454), (x_coord, 534)])
 
 
 def left_arm(length, angle, shift_from_left_guy):
@@ -81,9 +84,9 @@ def right_arm(length, angle, shift_from_left_guy):
 
 
 # left guy start
-main_body('orange', 0)
+main_body('orange', 463)
 
-head(0)
+head(463)
 
 eyes(100, 100, 255, 0)
 
@@ -103,9 +106,9 @@ hair('purple', 0)
 # left guy end
 
 # second guy start
-main_body('green', 800)
+main_body('green', 1263)
 
-head(800)
+head(1263)
 
 eyes(191, 200, 183, 800)
 
