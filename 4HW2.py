@@ -55,31 +55,30 @@ def nose_and_mouth(x_coord):
     polygon([(x_coord - 130, 454), (x_coord + 150, 454), (x_coord, 534)])
 
 
-def left_arm(length, angle, shift_from_left_guy):
-    a = shift_from_left_guy
+def left_arm(length, angle, x_coord):
     brushColor(233, 200, 176)
     penColor(200, 200, 200)
-    polygon([(230 + a, 569),
-             (270 + a, 549),
-             (270 - length * cos(angle) + a,
-              549 + length * sin(angle)),
-             (230 - length * cos(angle) + a,
+    polygon([(x_coord - 233, 569),
+             (x_coord - 193, 549),
+             (x_coord - 193 - length * cos(angle),
+              549 + length * sin(angle),
+             (x_coord - 233 - length * cos(angle),
               569 + length * sin(angle))])
     penColor('white')
-    circle((270 - length * cos(angle) + a + 230 - length * cos(angle) + a)/2,
+    circle((2 * x_coord - length * cos(angle) - 233 - length * cos(angle) - 193)/2,
            (549 + length * sin(angle) + 569 + length * sin(angle))/2, 40)
 
 
-def right_arm(length, angle, shift_from_left_guy):
-    a = shift_from_left_guy
+def right_arm(length, angle, x_coord):
     brushColor(233, 200, 176)
     penColor(200, 200, 200)
-    polygon([(630 + a, 549), (670 + a, 569),
-             (670 + length * cos(angle) + a,
+    polygon([(x_coord + 167, 549), (x_coord + 207, 569),
+             (x_coord + 207 + length * cos(angle),
               569 - length * sin(angle)),
-             (630 + length * cos(angle) + a, 549 - length * sin(angle))])
+             (x_coord + 167 + length * cos(angle),
+              549 - length * sin(angle))])
     penColor('white')
-    circle((670 + length * cos(angle) + a + 630 + length * cos(angle) + a)/2,
+    circle((2 * x_coord + length * cos(angle) + 207 + length * cos(angle) + 167)/2,
            (569 - length * sin(angle) + 549 - length * sin(angle))/2, 40)
 
 
