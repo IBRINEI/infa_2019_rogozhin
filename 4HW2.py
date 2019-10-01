@@ -1,25 +1,26 @@
-from graph import windowSize, canvasSize
+from graph import windowSize, canvasSize, run
 from graph import brushColor, penColor
 from graph import polygon, circle, label
 from math import sin, cos
 
 
-windowSize(1760, 769)
+windowSize(3000, 1000)
 canvasSize(1760, 769)
 
 
-def hair(color, shift_from_left_guy):
+def hair(color, x_coord):
     brushColor(color)
-    a = shift_from_left_guy
-    polygon([(293 + a, 275), (336 + a, 219), (267 + a, 205)])
-    polygon([(316 + a, 230), (378 + a, 200), (329 + a, 166)])
-    polygon([(362 + a, 201), (431 + a, 186), (377 + a, 149)])
-    polygon([(417 + a, 184), (476 + a, 180), (436 + a, 144)])
-    polygon([(457 + a, 187), (509 + a, 186), (486 + a, 143)])
-    polygon([(498 + a, 178), (543 + a, 200), (525 + a, 151)])
-    polygon([(532 + a, 187), (586 + a, 220), (573 + a, 152)])
-    polygon([(576 + a, 206), (621 + a, 253), (615 + a, 182)])
-    polygon([(608 + a, 235), (644 + a, 289), (674 + a, 218)])
+    default_hair = [[(293 - 463 + x_coord, 275), (336 - 463 + x_coord, 219), (267 - 463 + x_coord, 205)],
+                    [(316 - 463 + x_coord, 230), (378 - 463 + x_coord, 200), (329 - 463 + x_coord, 166)],
+                    [(362 - 463 + x_coord, 201), (431 - 463 + x_coord, 186), (377 - 463 + x_coord, 149)],
+                    [(417 - 463 + x_coord, 184), (476 - 463 + x_coord, 180), (436 - 463 + x_coord, 144)],
+                    [(457 - 463 + x_coord, 187), (509 - 463 + x_coord, 186), (486 - 463 + x_coord, 143)],
+                    [(498 - 463 + x_coord, 178), (543 - 463 + x_coord, 200), (525 - 463 + x_coord, 151)],
+                    [(532 - 463 + x_coord, 187), (586 - 463 + x_coord, 220), (573 - 463 + x_coord, 152)],
+                    [(576 - 463 + x_coord, 206), (621 - 463 + x_coord, 253), (615 - 463 + x_coord, 182)],
+                    [(608 - 463 + x_coord, 235), (644 - 463 + x_coord, 289), (674 - 463 + x_coord, 218)]]
+    for i in range(8):
+        polygon(default_hair[i])
 
 
 def main_body(color, x_coord):
@@ -28,8 +29,10 @@ def main_body(color, x_coord):
     circle(x_coord, 769, 300)
     penColor('black')
     brushColor(color)
-    polygon([(x_coord - 163, 629), (x_coord - 243, 629), (x_coord - 253, 539), (x_coord - 183, 489), (x_coord - 143, 549)])
-    polygon([(x_coord + 237, 629), (x_coord + 157, 629), (x_coord + 147, 539), (x_coord + 217, 489), (x_coord + 257, 549)])
+    polygon([(x_coord - 163, 629), (x_coord - 243, 629), (x_coord - 253, 539),
+             (x_coord - 183, 489), (x_coord - 143, 549)])
+    polygon([(x_coord + 237, 629), (x_coord + 157, 629), (x_coord + 147, 539),
+             (x_coord + 217, 489), (x_coord + 257, 549)])
 
 
 
@@ -67,7 +70,7 @@ def left_arm(length, angle, x_coord):
     polygon([(x_coord - 233, 569),
              (x_coord - 193, 549),
              (x_coord - 193 - length * cos(angle),
-              549 + length * sin(angle),
+              549 + length * sin(angle)),
              (x_coord - 233 - length * cos(angle),
               569 + length * sin(angle))])
     penColor('white')
@@ -93,56 +96,15 @@ def guy(x_coord, body_color, hair_color, r, g, b, al, ll, ar, lr):
     # r,g,b - eye color
     # ll,lr - lenght left/right
     # al, ar - angle left/right in radians
-    main_body(body_color, x_coord)
-    head(x_coord, r, g, b, hair_color)
     left_arm(ll, al, x_coord)
     right_arm(lr, ar, x_coord)
+    main_body(body_color, x_coord)
+    head(x_coord, r, g, b, hair_color)
 
 
-# left guy start
-main_body('orange', 463)
+guy(463, 'orange', 'purple', 100, 100, 255, 4.936, 409, 1.106, 469)
+guy(1263, 'green', 'yellow', 191, 200, 183, 4.936, 409, 1.106, 469)
 
-head(463)
-
-eyes(100, 100, 255, 0)
-
-nose_and_mouth(0)
-
-left_arm(409, 4.936, 0)
-
-right_arm(469, 1.106, 0)
-
-
-penColor('black')
-brushColor('orange')
-polygon([(300, 629), (220, 629), (210, 539), (280, 489), (320, 549)])
-polygon([(700, 629), (620, 629), (610, 539), (680, 489), (720, 549)])
-
-hair('purple', 0)
-# left guy end
-
-# second guy start
-#main_body('green', 1263)
-
-guy(1263, 'green', 'purple', 191, 200, 183, 4.936, 409, 1.106, 469)
-
-#head(1263)
-
-#eyes(191, 200, 183, 800)
-
-#nose_and_mouth(800)
-
-#left_arm(409, 4.936, 800)
-
-#right_arm(469, 1.106, 800)
-
-#penColor('black')
-#brushColor('green')
-#polygon([(1100, 629), (1020, 629), (1010, 539), (1080, 489), (1120, 549)])
-#polygon([(1500, 629), (1420, 629), (1410, 539), (1480, 489), (1520, 549)])
-
-#hair('yellow', 800)
-# second guy end
 brushColor('black')
 
 # label on top; may not work with old OS/PC
