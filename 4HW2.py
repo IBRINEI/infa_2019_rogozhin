@@ -35,7 +35,6 @@ def main_body(color, x_coord):
              (x_coord + 217, 489), (x_coord + 257, 549)])
 
 
-
 def head(x_coord, r, g, b, hair_color):
     brushColor(233, 200, 176)
     penColor(200, 200, 200)
