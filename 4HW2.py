@@ -29,6 +29,7 @@ def main_body(color, x_coord):
     circle(x_coord, 769, 300)
     penColor('black')
     brushColor(color)
+    # shoulders
     polygon([(x_coord - 163, 629), (x_coord - 243, 629), (x_coord - 253, 539),
              (x_coord - 183, 489), (x_coord - 143, 549)])
     polygon([(x_coord + 237, 629), (x_coord + 157, 629), (x_coord + 147, 539),
@@ -56,9 +57,10 @@ def eyes(color_red, color_green, color_blue, x_coord):
 
 
 def nose_and_mouth(x_coord):
+    # nose
     brushColor('brown')
     polygon([(x_coord + 20, 394), (x_coord - 20, 394), (x_coord, 424)])
-    # Nose is above; mouth is below
+    # mouth
     brushColor('red')
     polygon([(x_coord - 130, 454), (x_coord + 150, 454), (x_coord, 534)])
 
@@ -92,9 +94,9 @@ def right_arm(length, angle, x_coord):
 
 def guy(x_coord, body_color, hair_color, r, g, b, al, ll, ar, lr):
     # x_coord - x coordinate of the body circle center
-    # r,g,b - eye color
-    # ll,lr - lenght left/right
-    # al, ar - angle left/right in radians
+    # r, g, b - eye color
+    # ll, lr - lenght of left/right arm
+    # al, ar - angle of left/right arm in radians
     left_arm(ll, al, x_coord)
     right_arm(lr, ar, x_coord)
     main_body(body_color, x_coord)
@@ -104,7 +106,6 @@ def guy(x_coord, body_color, hair_color, r, g, b, al, ll, ar, lr):
 guy(463, 'orange', 'purple', 100, 100, 255, 4.936, 409, 1.106, 469)
 guy(1263, 'green', 'yellow', 191, 200, 183, 4.936, 409, 1.106, 469)
 
-brushColor('black')
 
 # label on top; may not work with old OS/PC
 label('PYTHON is REALLY AMAZING!', 00, 00,
