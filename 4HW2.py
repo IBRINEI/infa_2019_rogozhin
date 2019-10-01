@@ -117,17 +117,19 @@ hair('purple', 0)
 # left guy end
 
 # second guy start
-main_body('green', 1263)
+#main_body('green', 1263)
 
-head(1263)
+guy(1263, 'green', 'purple', 191, 200, 183, 4.936, 409, 1.106, 469)
 
-eyes(191, 200, 183, 800)
+#head(1263)
 
-nose_and_mouth(800)
+#eyes(191, 200, 183, 800)
 
-left_arm(409, 4.936, 800)
+#nose_and_mouth(800)
 
-right_arm(469, 1.106, 800)
+#left_arm(409, 4.936, 800)
+
+#right_arm(469, 1.106, 800)
 
 penColor('black')
 brushColor('green')
