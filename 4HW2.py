@@ -26,6 +26,11 @@ def main_body(color, x_coord):
     penColor(color)
     brushColor(color)
     circle(x_coord, 769, 300)
+    penColor('black')
+    brushColor(color)
+    polygon([(x_coord - 163, 629), (x_coord - 243, 629), (x_coord - 253, 539), (x_coord - 183, 489), (x_coord - 143, 549)])
+    polygon([(x_coord + 237, 629), (x_coord + 157, 629), (x_coord + 147, 539), (x_coord + 217, 489), (x_coord + 257, 549)])
+
 
 
 def head(x_coord, r, g, b, hair_color):
@@ -131,12 +136,12 @@ guy(1263, 'green', 'purple', 191, 200, 183, 4.936, 409, 1.106, 469)
 
 #right_arm(469, 1.106, 800)
 
-penColor('black')
-brushColor('green')
-polygon([(1100, 629), (1020, 629), (1010, 539), (1080, 489), (1120, 549)])
-polygon([(1500, 629), (1420, 629), (1410, 539), (1480, 489), (1520, 549)])
+#penColor('black')
+#brushColor('green')
+#polygon([(1100, 629), (1020, 629), (1010, 539), (1080, 489), (1120, 549)])
+#polygon([(1500, 629), (1420, 629), (1410, 539), (1480, 489), (1520, 549)])
 
-hair('yellow', 800)
+#hair('yellow', 800)
 # second guy end
 brushColor('black')
 
