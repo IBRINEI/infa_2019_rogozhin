@@ -82,6 +82,3 @@ rotate_square(((1, 1), (1, -1), (-1, -1), (-1, 1)), pi)
 market({'banana': 11, 'apple': 5, 'steak': 100}, 50)
 no_duble([1, 1, 1, 1, 2, 2, 2, 3, 4, 5, 5])
 difference([1, 2, 3, 2], [3, 4])
-
-
-return 0
