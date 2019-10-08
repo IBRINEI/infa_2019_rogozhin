@@ -1,5 +1,6 @@
 from math import sin, cos, pi
 
+
 # Makes a list of all prime numbers that a not more than a
 def prime(a):
     m = []
@@ -53,13 +54,13 @@ def market(lst, money):
             m.append(key)
     print(m)
 
-    
+
 # Removes all the dubles that appear in inserted list
 def no_duble(m):
     set1 = set(m)
     print(list(set1))
 
-    
+
 # Mathematical difference of sets, that are inserted as two lists
 def difference(m1, m2):
     q = True
@@ -74,6 +75,7 @@ def difference(m1, m2):
             q = True
     print(list(set(m3)))
 
+
 prime(1000)
 sort([6, 4, 2, 5, 35, 3, 34, 25, 0])
 rotate_square(((1, 1), (1, -1), (-1, -1), (-1, 1)), pi)
@@ -82,3 +84,4 @@ no_duble([1, 1, 1, 1, 2, 2, 2, 3, 4, 5, 5])
 difference([1, 2, 3, 2], [3, 4])
 
 
+return 0
