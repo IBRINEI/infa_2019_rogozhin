@@ -1,6 +1,6 @@
 from math import sin, cos, pi
 
-
+# Makes a list of all prime numbers that a not more than a
 def prime(a):
     m = []
     m.append(2)
@@ -18,6 +18,7 @@ def prime(a):
     print(m)
 
 
+# Sorting function; "Selection sort" (in - list)
 def sort(m):
     q = 0
     for i in range(len(m)):
@@ -29,6 +30,7 @@ def sort(m):
     print(m)
 
 
+# Prints a list of tuples of coordinates of a turned square based on starting coordinates and angle
 def rotate_square(square, angle):
     mid_x = 0
     mid_y = 0
@@ -43,6 +45,7 @@ def rotate_square(square, angle):
     print(square1)
 
 
+# You can buy everything that will be printed (in - set of items {'item' : price}; your money)
 def market(lst, money):
     m = []
     for key in lst:
@@ -50,10 +53,14 @@ def market(lst, money):
             m.append(key)
     print(m)
 
+    
+# Removes all the dubles that appear in inserted list
 def no_duble(m):
     set1 = set(m)
     print(list(set1))
 
+    
+# Mathematical difference of sets, that are inserted as two lists
 def difference(m1, m2):
     q = True
     m3 = []
