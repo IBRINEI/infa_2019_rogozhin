@@ -3,8 +3,7 @@ from math import sin, cos, pi
 
 # Makes a list of all prime numbers that a not more than a
 def prime(a):
-    m = []
-    m.append(2)
+    m = [2]
     n = 0
     q = True
     for i in range(a):
@@ -16,7 +15,7 @@ def prime(a):
             n = n + 1
         else:
             q = True
-    print(m)
+    return m
 
 
 # Sorting function; "Selection sort" (in - list)
@@ -28,7 +27,7 @@ def sort(m):
                 q = j + i
         m[i], m[q] = m[q], m[i]
         q = i + 1
-    print(m)
+    return m
 
 
 # Prints a list of tuples of coordinates of a turned square based on starting coordinates and angle
@@ -43,7 +42,7 @@ def rotate_square(square, angle):
         square1[i][0] = (square[i][0] - mid_x/4)*cos(angle) - (square[i][1] - mid_y/4)*sin(angle) + mid_x/4
         square1[i][1] = (square[i][0] - mid_x/4)*sin(angle) + (square[i][1] - mid_y/4)*cos(angle) + mid_y/4
         square1[i] = tuple(square1[i])
-    print(square1)
+    return square1
 
 
 # You can buy everything that will be printed (in - set of items {'item' : price}; your money)
@@ -52,33 +51,22 @@ def market(lst, money):
     for key in lst:
         if lst[key] < money:
             m.append(key)
-    print(m)
+    return m
 
 
 # Removes all the dubles that appear in inserted list
 def no_duble(m):
-    set1 = set(m)
-    print(list(set1))
+    return list(set(m))
 
 
 # Mathematical difference of sets, that are inserted as two lists
 def difference(m1, m2):
-    q = True
-    m3 = []
-    for i in m1:
-        for j in m2:
-            if i == j:
-                q = False
-        if q:
-            m3.append(i)
-        else:
-            q = True
-    print(list(set(m3)))
+    return (set(m1)).difference(m2)
 
 
-prime(1000)
-sort([6, 4, 2, 5, 35, 3, 34, 25, 0])
-rotate_square(((1, 1), (1, -1), (-1, -1), (-1, 1)), pi)
-market({'banana': 11, 'apple': 5, 'steak': 100}, 50)
-no_duble([1, 1, 1, 1, 2, 2, 2, 3, 4, 5, 5])
-difference([1, 2, 3, 2], [3, 4])
+print(prime(1000))
+print(sort([6, 4, 2, 5, 35, 3, 34, 25, 0]))
+print(rotate_square(((1, 1), (1, -1), (-1, -1), (-1, 1)), pi))
+print(market({'banana': 11, 'apple': 5, 'steak': 100}, 50))
+print(no_duble([1, 1, 1, 1, 2, 2, 2, 3, 4, 5, 5]))
+print(difference([1, 2, 3, 2], [3, 4]))
