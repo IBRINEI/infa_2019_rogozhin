@@ -61,7 +61,7 @@ def no_duble(m):
 
 # Mathematical difference of sets, that are inserted as two lists
 def difference(m1, m2):
-    return (set(m1)).difference(m2)
+    return (set(m1)).difference(set(m2))
 
 
 print(prime(1000))
