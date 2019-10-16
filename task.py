@@ -46,10 +46,10 @@ def rotate_square(square, angle):
 
 
 # You can buy everything that will be printed (in - set of items {'item' : price}; your money)
-def market(lst, money):
+def market(dct, money):
     m = []
-    for key in lst:
-        if lst[key] < money:
+    for key in dct:
+        if dct[key] < money:
             m.append(key)
     return m
 
