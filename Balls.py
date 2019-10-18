@@ -1,4 +1,4 @@
-from tkinter import Tk, Canvas, BOTH, NW, CENTER, mainloop
+from tkinter import (Tk, Canvas, BOTH, NW, CENTER, mainloop)
 from random import randrange as rnd, choice
 root = Tk()
 root.geometry('800x600'
