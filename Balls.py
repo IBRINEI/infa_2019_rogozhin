@@ -1,8 +1,7 @@
-from tkinter import *
+from tkinter import Tk, Canvas, BOTH, NW, CENTER, mainloop
 from random import randrange as rnd, choice
-import time
 root = Tk()
-root.geometry('800x600')
+root.geometry('800x600'
 
 canv = Canvas(root, bg='white')
 canv.pack(fill=BOTH, expand=1)
