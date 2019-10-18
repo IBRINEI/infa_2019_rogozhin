@@ -15,11 +15,12 @@ colors = ['red', 'orange', 'black', 'green', 'blue']
 score = 0
 
 
-# Makes a stationary ball, that is deleted on click
+# Makes stationary balls, click makes them all disappear
 # Click - +1 point
 # No click - -1 point
 # Missed click  - -2 points
-# Additional feature - function create_ball makes the ball shrink a little bit with time1
+# Additional feature - function create_ball makes the ball shrink a little bit with time
+# Can be changed by changing the delta of r[j]
 def new_ball():
     global x, y, r, cont, score, color_new, create_ball_cont, num
     if cont and overall_cont:
@@ -57,6 +58,7 @@ def create_ball_cont_false():
     create_ball_cont = False
 
 
+# Randomizes coordinates for static balls
 def rnd_coord_new_ball():
     global x, y, r, color_new, num
     x = []
@@ -78,54 +80,95 @@ def score_label():
     canv.after(500, score_label)
 
 
-# Randomizes coordinates for exotic ball
+# Randomizes coordinates for exotic balls
 def exotic_ball_coord():
-    global xe, ye, xr1, yr1, rie, roe
-    xe = rnd(200, 550)
-    ye = rnd(250, 350)
-    xr1 = xe
-    yr1 = ye
-    roe = rnd(50, 70)
-    rie = rnd(5, 10)
+    global xe, ye, xr1, yr1, rie, roe, num_exotic
+    xe = []
+    ye = []
+    xr1 = []
+    yr1 = []
+    rie = []
+    roe = []
+    for i in range(num_exotic):
+        xe.append(rnd(200, 550))
+        ye.append(rnd(250, 350))
+        xr1.append(xe[i])
+        yr1.append(ye[i])
+        roe.append(rnd(50, 70))
+        rie.append(rnd(5, 10))
 
 
-# Randomizes direction of a ball
+# Randomizes directions of balls
 def moving_ball_dir():
+    global x_dir, y_dir, num_exotic
+    x_dir = []
+    y_dir = []
+    for i in range(num_exotic):
+        x_dir.append(rnd(19999)/10000)
+        if x_dir[i] > 1:
+            x_dir[i] = 1 - x_dir[i]
+        y_dir.append(rnd(19999)/10000)
+        if y_dir[i] > 1:
+            y_dir[i] = 1 - y_dir[i]
+
+
+# Randomizes individual directions of a ball
+def moving_ball_dir_i(i):
     global x_dir, y_dir
-    x_dir = rnd(19999)/10000
-    if x_dir > 1:
-        x_dir = 1 - x_dir
-    y_dir = rnd(19999)/10000
-    if y_dir > 1:
-        y_dir = 1 - y_dir
+    x_dir[i] = rnd(19999) / 10000
+    if x_dir[i] > 1:
+        x_dir[i] = 1 - x_dir[i]
+    y_dir[i] = rnd(19999) / 10000
+    if y_dir[i] > 1:
+        y_dir[i] = 1 - y_dir[i]
 
 
+# Randomizes directions of inside balls
 def moving_ball_dir_1():
+    global x_dir_1, y_dir_1, num_exotic
+    x_dir_1 = []
+    y_dir_1 = []
+    for i in range(num_exotic):
+        x_dir_1.append(rnd(19999)/10000)
+        if x_dir_1[i] > 1:
+            x_dir_1[i] = 1 - x_dir_1[i]
+        y_dir_1.append(rnd(19999)/10000)
+        if y_dir_1[i] > 1:
+            y_dir_1[i] = 1 - y_dir_1[i]
+
+
+# Randomizes directions of an individual inside ball
+def moving_ball_dir_1_i(i):
     global x_dir_1, y_dir_1
-    x_dir_1 = rnd(19999)/10000
-    if x_dir_1 > 1:
-        x_dir_1 = 1 - x_dir_1
-    y_dir_1 = rnd(19999)/10000
-    if y_dir_1 > 1:
-        y_dir_1 = 1 - y_dir_1
+    x_dir_1[i] = rnd(19999) / 10000
+    if x_dir_1[i] > 1:
+        x_dir_1[i] = 1 - x_dir_1[i]
+    y_dir_1[i] = rnd(19999) / 10000
+    if y_dir_1[i] > 1:
+        y_dir_1[i] = 1 - y_dir_1[i]
 
 
-# Inside part of exotic ball, moves strangely and fast
+# Inside part of exotic balls, move strangely and fast
 def moving_ball_1():
-    global xr1, yr1, x_dir_1, y_dir_1, xe, ye, roe, rie, exotic_ball_clickable
-    if overall_cont and exotic_ball_cont:
-        xr1 += x_dir_1 * 4
-        yr1 += y_dir_1 * 4
-        if (xr1 - rie < xe - roe) or (xr1 + rie > xe + roe) or (yr1 - rie < ye - roe) or (yr1 + rie > ye + roe):
-            xr1 -= x_dir_1 * 4
-            yr1 -= y_dir_1 * 4
-            moving_ball_dir_1()
-        if (xr1 - rie < xe - roe) or (xr1 + rie > xe + roe) or (yr1 - rie < ye - roe) or (yr1 + rie > ye + roe):
-            exotic_ball_clickable = False
-        else:
-            exotic_ball_clickable = True
-        canv.delete('m_ball1')
-        canv.create_rectangle(xr1 - rie, yr1 - rie, xr1 + rie, yr1 + rie, fill='white', width=0, tag='m_ball1')
+    global xr1, yr1, x_dir_1, y_dir_1, xe, ye, roe, rie, exotic_ball_clickable, num_exotic
+    if overall_cont:
+        for i in range(num_exotic):
+            if exotic_ball_cont[i]:
+                xr1[i] += x_dir_1[i] * 4
+                yr1[i] += y_dir_1[i] * 4
+                if (xr1[i] - rie[i] < xe[i] - roe[i]) or (xr1[i] + rie[i] > xe[i] + roe[i]) or\
+                        (yr1[i] - rie[i] < ye[i] - roe[i]) or (yr1[i] + rie[i] > ye[i] + roe[i]):
+                    xr1[i] -= x_dir_1[i] * 4
+                    yr1[i] -= y_dir_1[i] * 4
+                    moving_ball_dir_1_i(i)
+                if (xr1[i] - rie[i] < xe[i] - roe[i]) or (xr1[i] + rie[i] > xe[i] + roe[i]) or\
+                        (yr1[i] - rie[i] < ye[i] - roe[i]) or (yr1[i] + rie[i] > ye[i] + roe[i]):
+                    exotic_ball_clickable[i] = False
+                else:
+                    exotic_ball_clickable[i] = True
+                canv.delete('m_ball1' + str(i))
+                canv.create_rectangle(xr1[i] - rie[i], yr1[i] - rie[i], xr1[i] + rie[i], yr1[i] + rie[i], fill='white',
+                                      width=0, tag='m_ball1' + str(i))
         canv.after(1, moving_ball_1)
     else:
         pass
@@ -134,33 +177,31 @@ def moving_ball_1():
 # Exotic ball is a ball that spawns only once and consists of two parts
 # Outside part is a ball that just moves (coords xe, ye, roe(as radius))
 # Inside part is a square, moving fast inside the outside ball(coords xr1, xr2, rie(as radius))
-# Click on the inside ball - +50 points
+# Click on all inside balls - +50 points
 # After click it disappears forever
 def exotic_ball():
-    global xe, ye, roe, rie
-    if exotic_ball_cont and overall_cont:
-        xe += x_dir * 4
-        ye += y_dir * 4
-        if (xe - roe < 0) or (xe + roe > width) or (ye - roe < 0) or (ye + roe > height):
-            xe -= x_dir * 8
-            ye -= y_dir * 8
-            moving_ball_dir()
-        canv.delete('e_b_o')
-        canv.create_oval(xe - roe, ye - roe, xe + roe, ye + roe, fill='blue', width=0, tag='e_b_o')
+    global xe, ye, roe, rie, num_exotic
+    if overall_cont:
+        for i in range(num_exotic):
+            if exotic_ball_cont[i]:
+                xe[i] += x_dir[i] * 4
+                ye[i] += y_dir[i] * 4
+                if (xe[i] - roe[i] < 0) or (xe[i] + roe[i] > width)or (ye[i] - roe[i] < 0) or (ye[i] + roe[i] > height):
+                    xe[i] -= x_dir[i] * 8
+                    ye[i] -= y_dir[i] * 8
+                    moving_ball_dir_i(i)
+                canv.delete('e_b_o' + str(i))
+                canv.create_oval(xe[i] - roe[i], ye[i] - roe[i], xe[i] + roe[i], ye[i] + roe[i], fill='blue', width=0,
+                                 tag='e_b_o' + str(i))
         root.after(10, exotic_ball)
     else:
         pass
 
 
-overall_cont = True
-exotic_ball_cont = True
-exotic_ball_clickable = True
-create_ball_cont = True
-
-
 def click(event):
     global score, cont, exotic_ball_cont, num
     if overall_cont:
+        miss = False
         for i in range(num):
             if (abs(event.x - x[i]) < r[i]) and (abs(event.y - y[i]) < r[i]):
                 score += 2
@@ -168,17 +209,21 @@ def click(event):
                 cont = False
                 new_ball()
             else:
-                score -= 2
-        if (abs(event.x - xr1) < rie) and (abs(event.y < yr1) < rie) and (exotic_ball_cont is True) and \
-                (exotic_ball_clickable is True):
-            score += 52
-            exotic_ball_cont = False
-            root.after(10, canv.delete('e_b_o', 'm_ball1'))
+                miss = True
+        if miss is True:
+            score -= 2
+        for i in range(num_exotic):
+            if (abs(event.x - xr1[i]) < rie[i]) and (abs(event.y < yr1[i]) < rie[i]) and (exotic_ball_cont[i] is True) \
+                    and (exotic_ball_clickable[i] is True):
+                score += 52/num_exotic
+                exotic_ball_cont[i] = False
+                root.after(10, canv.delete('e_b_o' + str(i), 'm_ball1' + str(i)))
     else:
         pass
 
 
 # imports a leaderboard from local file, adds current player with score after 60 seconds, sorts it
+# only works if the game is finished, otherwise the score won`t be added
 def leaderboard():
     global score, name
     d = {}
@@ -203,7 +248,17 @@ def deny():
     overall_cont = False
 
 
-num = 10
+num = 10         # Number of ordinary balls
+num_exotic = 10  # Number of exotic balls
+
+overall_cont = True
+exotic_ball_cont = []
+for l in range(num_exotic):
+    exotic_ball_cont.append(True)
+exotic_ball_clickable = []
+for k in range(num_exotic):
+    exotic_ball_clickable.append(True)
+create_ball_cont = True
 
 print("Type your name:")
 name = input()
