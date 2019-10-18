@@ -1,4 +1,4 @@
-from tkinter import * 
+from tkinter import *
 from random import randrange as rnd, choice
 import time
 root = Tk()
@@ -19,20 +19,55 @@ score = 0
 # Click - +1 point
 # No click - -1 point
 # Missed click  - -2 points
+# Additional feature - function create_ball makes the ball shrink a little bit with time1
 def new_ball():
-    global x, y, r, cont, score
+    global x, y, r, cont, score, color_new, create_ball_cont, num
     if cont and overall_cont:
-        canv.delete('new_ball')
-        x = rnd(100, 700)
-        y = rnd(100, 500)
-        r = rnd(30, 50)
+        for i in range(num):
+            canv.delete('new_ball_' + str(i))
+
+        def create_ball():
+            global r, color_new, create_ball_cont
+            if create_ball_cont is True:
+                for j in range(num):
+                    r[j] -= 0.1
+                    canv.delete('new_ball_' + str(j))
+                    canv.create_oval(x[j] - r[j], y[j] - r[j], x[j] + r[j], y[j] + r[j], fill=color_new[j], width=0,
+                                     tag='new_ball_'+str(j))
+                root.after(2, create_ball)
         score -= 1
-        canv.create_oval(x - r, y - r, x + r, y + r, fill=choice(colors), width=0, tag='new_ball')
+        root.after(5, create_ball_cont_true)
+        root.after(6, create_ball)
         root.after(500, new_ball)
+        root.after(500, rnd_coord_new_ball)
+        root.after(500, create_ball_cont_false)
     elif overall_cont:
         cont = True
     else:
         pass
+
+
+def create_ball_cont_true():
+    global create_ball_cont
+    create_ball_cont = True
+
+
+def create_ball_cont_false():
+    global create_ball_cont
+    create_ball_cont = False
+
+
+def rnd_coord_new_ball():
+    global x, y, r, color_new, num
+    x = []
+    y = []
+    r = []
+    color_new = []
+    for i in range(num):
+        x.append(rnd(100, 700))
+        y.append(rnd(100, 500))
+        r.append(rnd(30, 50))
+        color_new.append(choice(colors))
 
 
 # Makes a score label, refreshing every 500 ms
@@ -77,7 +112,7 @@ def moving_ball_dir_1():
 
 # Inside part of exotic ball, moves strangely and fast
 def moving_ball_1():
-    global xr1, yr1, x_dir_1, y_dir_1, xe, ye, roe, rie
+    global xr1, yr1, x_dir_1, y_dir_1, xe, ye, roe, rie, exotic_ball_clickable
     if overall_cont and exotic_ball_cont:
         xr1 += x_dir_1 * 4
         yr1 += y_dir_1 * 4
@@ -85,6 +120,10 @@ def moving_ball_1():
             xr1 -= x_dir_1 * 4
             yr1 -= y_dir_1 * 4
             moving_ball_dir_1()
+        if (xr1 - rie < xe - roe) or (xr1 + rie > xe + roe) or (yr1 - rie < ye - roe) or (yr1 + rie > ye + roe):
+            exotic_ball_clickable = False
+        else:
+            exotic_ball_clickable = True
         canv.delete('m_ball1')
         canv.create_rectangle(xr1 - rie, yr1 - rie, xr1 + rie, yr1 + rie, fill='white', width=0, tag='m_ball1')
         canv.after(1, moving_ball_1)
@@ -115,19 +154,23 @@ def exotic_ball():
 
 overall_cont = True
 exotic_ball_cont = True
+exotic_ball_clickable = True
+create_ball_cont = True
 
 
 def click(event):
-    global score, cont, exotic_ball_cont
+    global score, cont, exotic_ball_cont, num
     if overall_cont:
-        if (abs(event.x - x) < r) and (abs(event.y - y) < r):
-            score += 2
-            canv.delete('new_ball')
-            cont = False
-            new_ball()
-        else:
-            score -= 2
-        if (abs(event.x - xr1) < rie) and (abs(event.y < yr1) < rie) and (exotic_ball_cont is True):
+        for i in range(num):
+            if (abs(event.x - x[i]) < r[i]) and (abs(event.y - y[i]) < r[i]):
+                score += 2
+                canv.delete('new_ball_' + str(i))
+                cont = False
+                new_ball()
+            else:
+                score -= 2
+        if (abs(event.x - xr1) < rie) and (abs(event.y < yr1) < rie) and (exotic_ball_cont is True) and \
+                (exotic_ball_clickable is True):
             score += 52
             exotic_ball_cont = False
             root.after(10, canv.delete('e_b_o', 'm_ball1'))
@@ -160,6 +203,8 @@ def deny():
     overall_cont = False
 
 
+num = 10
+
 print("Type your name:")
 name = input()
 
@@ -167,6 +212,7 @@ score_label()
 exotic_ball_coord()
 moving_ball_dir()
 moving_ball_dir_1()
+rnd_coord_new_ball()
 new_ball()
 exotic_ball()
 moving_ball_1()
