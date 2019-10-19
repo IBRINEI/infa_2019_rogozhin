@@ -3,31 +3,31 @@ from math import sin, cos, pi
 
 # Makes a list of all prime numbers that a not more than a
 def prime(a):
-    m = [2]
-    n = 0
-    q = True
+    lst = [2]
+    counter = 0
+    is_prime = True
     for i in range(a):
-        for j in range(n):
-            if (i + 3) % m[j] == 0:
-                q = False
+        for j in range(counter):
+            if (i + 3) % lst[j] == 0:
+                is_prime = False
         if q:
-            m.append(i + 3)
-            n = n + 1
+            lst.append(i + 3)
+            counter += 1
         else:
-            q = True
-    return m
+            is_prime = True
+    return lst
 
 
 # Sorting function; "Selection sort" (in - list)
-def sort(m):
-    q = 0
-    for i in range(len(m)):
-        for j in range(len(m) - i):
-            if m[j + i] < m[q]:
-                q = j + i
-        m[i], m[q] = m[q], m[i]
-        q = i + 1
-    return m
+def sort(lst):
+    min_index = 0
+    for i in range(len(lst)):
+        for j in range(len(lst) - i):
+            if lst[j + i] < m[min_index]:
+                min_index = j + i
+        lst[i], lst[min_index] = lst[min_index], lst[i]
+        min_index = i + 1
+    return lst
 
 
 # Prints a list of tuples of coordinates of a turned square based on starting coordinates and angle
@@ -47,16 +47,16 @@ def rotate_square(square, angle):
 
 # You can buy everything that will be printed (in - set of items {'item' : price}; your money)
 def market(dct, money):
-    m = []
+    lst = []
     for key in dct:
         if dct[key] < money:
-            m.append(key)
-    return m
+            lst.append(key)
+    return lst
 
 
 # Removes all the dubles that appear in inserted list
-def no_duble(m):
-    return list(set(m))
+def no_duble(lst):
+    return list(set(lst))
 
 
 # Mathematical difference of sets, that are inserted as two lists
