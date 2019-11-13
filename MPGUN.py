@@ -27,11 +27,11 @@ class ball():
         self.vy = 0
         self.color = choice(['blue', 'green', 'red', 'brown'])
         self.id = canv.create_oval(
-                self.x - self.r,
-                self.y - self.r,
-                self.x + self.r,
-                self.y + self.r,
-                fill=self.color
+            self.x - self.r,
+            self.y - self.r,
+            self.x + self.r,
+            self.y + self.r,
+            fill=self.color
         )
         self.live = 30
         self.xtbound = []
@@ -48,11 +48,11 @@ class ball():
 
     def set_coords(self):
         canv.coords(
-                self.id,
-                self.x - self.r,
-                self.y - self.r,
-                self.x + self.r,
-                self.y + self.r
+            self.id,
+            self.x - self.r,
+            self.y - self.r,
+            self.x + self.r,
+            self.y + self.r
         )
 
     def move(self):
@@ -63,10 +63,10 @@ class ball():
         и стен по краям окна (размер окна 800х600).
         """
 
-        if self. live <= 0:
+        if self.live <= 0:
             canv.delete(self.id)
         else:
-            self.vy += 9.81/10
+            self.vy += 9.81 / 10
             self.x += self.vx
             self.y += self.vy
             self.set_coords()
@@ -81,27 +81,28 @@ class ball():
                 c = gr1.coords[i - 1][1] - gr1.coords[i][1]
                 d = gr1.coords[i][0] - gr1.coords[i - 1][0]
                 e = gr1.coords[i - 1][0] * gr1.coords[i][1] - gr1.coords[i][0] * gr1.coords[i - 1][1]
-                if ((abs(c*self.x + d*self.y + e)/ math.sqrt(c*c + d*d)) < self.r) and (c*(self.y - gr1.coords[i - 1][1]) - d*(self.x - gr1.coords[i - 1][0]))*(c*(self.y - gr1.coords[i][1]) - d*(self.x - gr1.coords[i][0])) < 0:
-                    self.x -= 2*self.vx
-                    self.y -= 2*self.vy
+                if ((abs(c * self.x + d * self.y + e) / math.sqrt(c * c + d * d)) < self.r) and (
+                        c * (self.y - gr1.coords[i - 1][1]) - d * (self.x - gr1.coords[i - 1][0])) * (
+                        c * (self.y - gr1.coords[i][1]) - d * (self.x - gr1.coords[i][0])) < 0:
+                    self.x -= 2 * self.vx
+                    self.y -= 2 * self.vy
                     self.exvx = self.vx
                     self.exvy = self.vy
-                    #self.vx = (self.exvx * math.cos(2 * math.atan(k1) - 180) + self.exvy * math.cos(2 * math.atan(k1) - 90)) / 1
-                    #self.vy = (self.exvx * math.sin(2 * math.atan(k1) - 180) + self.exvy * math.sin(2 * math.atan(k1) - 90)) / 1
+                    # self.vx = (self.exvx * math.cos(2 * math.atan(k1) - 180) + self.exvy * math.cos(2 * math.atan(k1) - 90)) / 1
+                    # self.vy = (self.exvx * math.sin(2 * math.atan(k1) - 180) + self.exvy * math.sin(2 * math.atan(k1) - 90)) / 1
                     self.vx = self.exvx - 2 * c * (self.exvx * c + self.exvy * d) / (c * c + d * d) * 0.5
                     self.vy = self.exvy - 2 * d * (self.exvx * c + self.exvy * d) / (c * c + d * d) * 0.5
-                    self.x += 2*self.vx
-                    self.y += 2*self.vy
+                    self.x += 2 * self.vx
+                    self.y += 2 * self.vy
                     self.set_coords()
 
-
-#        if self.x > self.xbound:
-#            self.x -= self.vx
-#            self.vx = -self.vx/2.5
-#        if self.y > self.ybound:
-#            self.y -= self.vy
-#            self.vy = -self.vy/2.5
-#            self.vx -= self.vx*0.15
+    #        if self.x > self.xbound:
+    #            self.x -= self.vx
+    #            self.vx = -self.vx/2.5
+    #        if self.y > self.ybound:
+    #            self.y -= self.vy
+    #            self.vy = -self.vy/2.5
+    #            self.vx -= self.vx*0.15
 
     def hittest(self, obj):
         """Функция проверяет сталкивалкивается ли данный обьект с целью, описываемой в обьекте obj.
@@ -111,7 +112,7 @@ class ball():
         Returns:
             Возвращает True в случае столкновения мяча и цели. В противном случае возвращает False.
         """
-        if math.sqrt((self.x - obj.x)**2 + (self.y - obj.y)**2) < (self.r + obj.r):
+        if math.sqrt((self.x - obj.x) ** 2 + (self.y - obj.y) ** 2) < (self.r + obj.r):
             canv.delete(obj.id)
             obj.live = 0
             return True
@@ -132,6 +133,7 @@ class gun():
         self.id = canv.create_line(self.x - 15, self.y + 15, self.x + 15, self.y - 15, width=7, fill='black')
         self.live = 1
         self.r = 15
+
     def fire2_start(self, event):
         self.f2_on = 1
 
@@ -159,30 +161,30 @@ class gun():
     def targetting(self, event):
         """Прицеливание. Зависит от положения мыши."""
         if event:
-             self.an = math.atan((event.y - self.y - 15) / (event.x - self.x + 15))
-
+            self.an = math.atan((event.y - self.y + 15) / (event.x - self.x - 15))
+            #self.an = math.acos((event.x - self.x - 15) / math.sqrt((event.y - self.y + 15)**2 + (event.x - self.x - 15)**2))
         if self.f2_on:
-             canv.itemconfig(self.id, fill='orange')
+            canv.itemconfig(self.id, fill='orange')
         else:
-             canv.itemconfig(self.id, fill='black')
-        if (event.y - self.y - 15) / (event.x - self.x + 15) >= 0:
-             canv.coords(self.id, self.x - 15, self.y + 15,
-                         self.x - 15 - max(self.f2_power, 20) * math.cos(self.an),
-                         self.y + 15 - max(self.f2_power, 20) * math.sin(self.an)
-                         )
+            canv.itemconfig(self.id, fill='black')
+        if (event.y - self.y + 15) / (event.x - self.x - 15) >= 0:
+            canv.coords(self.id, self.x - 15, self.y + 15,
+                        self.x - 15 - max(self.f2_power, 20) * math.cos(self.an),
+                        self.y + 15 - max(self.f2_power, 20) * math.sin(self.an)
+                        )
         else:
-             canv.coords(self.id, self.x - 15, self.y + 15,
-                         self.x - 15 + max(self.f2_power, 20) * math.cos(self.an),
-                         self.y + 15 + max(self.f2_power, 20) * math.sin(self.an)
-                         )
+            canv.coords(self.id, self.x - 15, self.y + 15,
+                        self.x - 15 + max(self.f2_power, 20) * math.cos(self.an),
+                        self.y + 15 + max(self.f2_power, 20) * math.sin(self.an)
+                        )
         # canv.coords(self.id)
-       # self.an = math.atan((event.y - self.y) / (event.x - self.x))
-        #if self.f2_on:
-         #   canv.itemconfig(self.id, fill = 'orannge')
-        #else:
-        #    canv.itemconfig(self.id, fill = 'black')
-        #canv.coords(self.id, self.x + 15, self.y - 15, )
 
+    # self.an = math.atan((event.y - self.y) / (event.x - self.x))
+    # if self.f2_on:
+    #   canv.itemconfig(self.id, fill = 'orannge')
+    # else:
+    #    canv.itemconfig(self.id, fill = 'black')
+    # canv.coords(self.id, self.x + 15, self.y - 15, )
 
     def power_up(self):
         if self.f2_on:
@@ -218,9 +220,12 @@ class ground():
     def really_draw(self):
         print(len(self.coords))
         for i in range(1, len(self.coords)):
-            self.id.append(canv.create_line(self.coords[i-1][0], self.coords[i-1][1], self.coords[i][0], self.coords[i][1], width = 3))
+            self.id.append(
+                canv.create_line(self.coords[i - 1][0], self.coords[i - 1][1], self.coords[i][0], self.coords[i][1],
+                                 width=3))
         self.end = False
         new_game()
+
 
 gr1 = ground()
 screen1 = canv.create_text(400, 300, text='', font='28')
@@ -230,6 +235,10 @@ g1.bullet = 0
 g2.bullet = 0
 g1.balls = []
 g2.balls = []
+g1.score = 0
+g1.scoreid = canv.create_text(100, 20, text='1: ' + str(g1.score))
+g2.score = 0
+g2.scoreid = canv.create_text(200, 10, text='2: ' + str(g2.score))
 g1.live = 1
 g2.live = 1
 g1.launched = False
@@ -243,6 +252,7 @@ def ground_draw():
     canv.bind('<ButtonRelease-1>', gr1.draw_finish)
     canv.bind('<Motion>', gr1.draw)
 
+
 def new_game(event=''):
     global gun, t1, screen1, balls, bullet, g1, b, t2, gr1, g2
     canv.itemconfig(screen1, text='')
@@ -250,6 +260,8 @@ def new_game(event=''):
     g1.fire2_set(20, 450)
     g2.fire2_set(620, 450)
     while g1.live and g2.live:
+        canv.itemconfig(g1.scoreid, text='1: ' + str(g1.score))
+        canv.itemconfig(g2.scoreid, text='2: ' + str(g2.score))
         if g2.launched is True and g1.launched is False:
             last = 1
             canv.bind('<Button-1>', g1.fire2_start)
@@ -265,8 +277,10 @@ def new_game(event=''):
                     canv.bind('<Motion>', g1.idle)
                     if not g1.live:
                         canv.itemconfig(screen1, text='Игрок 2 победил за' + str(g2.bullet) + ' выстрелов')
+                        g2.score += 1
                     elif not g2.live:
                         canv.itemconfig(screen1, text='Игрок 1 победил за' + str(g1.bullet) + ' выстрелов')
+                        g1.score += 1
                     g1.live = 0
                     g2.live = 0
             for b in g2.balls:
@@ -278,8 +292,10 @@ def new_game(event=''):
                     canv.bind('<Motion>', g2.idle)
                     if not g1.live:
                         canv.itemconfig(screen1, text='Игрок 2 победил за' + str(g2.bullet) + ' выстрелов')
+                        g2.score += 1
                     elif not g2.live:
                         canv.itemconfig(screen1, text='Игрок 1 победил за' + str(g1.bullet) + ' выстрелов')
+                        g1.score += 1
                     g1.live = 0
                     g2.live = 0
             if g1.launched is True:
@@ -300,9 +316,11 @@ def new_game(event=''):
                     canv.bind('<ButtonRelease-1>', g1.idle)
                     canv.bind('<Motion>', g1.idle)
                     if not g1.live:
-                        canv.itemconfig(screen1, text='Игрок 2 победил за' + str(g2.bullet) + ' выстрелов')
+                        canv.itemconfig(screen1, text='Игрок 2 победил за ' + str(g2.bullet) + ' выстрелов')
+                        g2.score += 1
                     elif not g2.live:
-                        canv.itemconfig(screen1, text='Игрок 1 победил за' + str(g2.bullet) + ' выстрелов')
+                        canv.itemconfig(screen1, text='Игрок 1 победил за ' + str(g2.bullet) + ' выстрелов')
+                        g1.score += 1
                     g1.live = 0
                     g2.live = 0
             for b in g2.balls:
@@ -313,9 +331,11 @@ def new_game(event=''):
                     canv.bind('<ButtonRelease-1>', g2.idle)
                     canv.bind('<Motion>', g2.idle)
                     if not g1.live:
-                        canv.itemconfig(screen1, text='Игрок 2 победил за' + str(g2.bullet) + ' выстрелов')
+                        canv.itemconfig(screen1, text='Игрок 2 победил за ' + str(g2.bullet) + ' выстрелов')
+                        g1.score += 1
                     elif not g2.live:
-                        canv.itemconfig(screen1, text='Игрок 1 победил за' + str(g2.bullet) + ' выстрелов')
+                        canv.itemconfig(screen1, text='Игрок 1 победил за ' + str(g2.bullet) + ' выстрелов')
+                        g2.score += 1
                     g1.live = 0
                     g2.live = 0
             if g2.launched is True:
@@ -329,7 +349,9 @@ def new_game(event=''):
         time.sleep(0.03)
 
     canv.delete(g1.id)
-    for i in balls:
+    for i in g1.balls:
+        canv.delete(i.id)
+    for i in g2.balls:
         canv.delete(i.id)
     root.after(3000, new_game)
 
