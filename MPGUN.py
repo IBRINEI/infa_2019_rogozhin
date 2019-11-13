@@ -88,8 +88,6 @@ class ball():
                     self.y -= 2 * self.vy
                     self.exvx = self.vx
                     self.exvy = self.vy
-                    # self.vx = (self.exvx * math.cos(2 * math.atan(k1) - 180) + self.exvy * math.cos(2 * math.atan(k1) - 90)) / 1
-                    # self.vy = (self.exvx * math.sin(2 * math.atan(k1) - 180) + self.exvy * math.sin(2 * math.atan(k1) - 90)) / 1
                     self.vx = self.exvx - 2 * c * (self.exvx * c + self.exvy * d) / (c * c + d * d) * 0.5
                     self.vy = self.exvy - 2 * d * (self.exvx * c + self.exvy * d) / (c * c + d * d) * 0.5
                     self.x += 2 * self.vx
@@ -150,8 +148,12 @@ class gun():
         new_ball.x = self.x - 15
         new_ball.y = self.y + 15
         self.an = math.atan((event.y - new_ball.y - 15) / (event.x - new_ball.x + 15))
-        new_ball.vx = self.f2_power * math.cos(self.an)
-        new_ball.vy = self.f2_power * math.sin(self.an)
+        if self.an > 0 and event.x - new_ball.x + 15 < 0:
+            new_ball.vx = -self.f2_power * math.cos(self.an)
+            new_ball.vy = -self.f2_power * math.sin(self.an)
+        else:
+            new_ball.vx = self.f2_power * math.cos(self.an)
+            new_ball.vy = self.f2_power * math.sin(self.an)
         self.balls.append(new_ball)
         self.f2_on = 0
         self.f2_power = 10
@@ -162,7 +164,6 @@ class gun():
         """Прицеливание. Зависит от положения мыши."""
         if event:
             self.an = math.atan((event.y - self.y + 15) / (event.x - self.x - 15))
-            #self.an = math.acos((event.x - self.x - 15) / math.sqrt((event.y - self.y + 15)**2 + (event.x - self.x - 15)**2))
         if self.f2_on:
             canv.itemconfig(self.id, fill='orange')
         else:
@@ -235,10 +236,10 @@ g1.bullet = 0
 g2.bullet = 0
 g1.balls = []
 g2.balls = []
-g1.score = 0
-g1.scoreid = canv.create_text(100, 20, text='1: ' + str(g1.score))
-g2.score = 0
-g2.scoreid = canv.create_text(200, 10, text='2: ' + str(g2.score))
+g1.scoreq = 0
+g1.scoreid = canv.create_text(100, 20, text='1: ' + str(g1.scoreq))
+g2.scoreq = 0
+g2.scoreid = canv.create_text(200, 10, text='2: ' + str(g2.scoreq))
 g1.live = 1
 g2.live = 1
 g1.launched = False
@@ -260,8 +261,8 @@ def new_game(event=''):
     g1.fire2_set(20, 450)
     g2.fire2_set(620, 450)
     while g1.live and g2.live:
-        canv.itemconfig(g1.scoreid, text='1: ' + str(g1.score))
-        canv.itemconfig(g2.scoreid, text='2: ' + str(g2.score))
+        canv.itemconfig(g1.scoreid, text='1: ' + str(g1.scoreq))
+        canv.itemconfig(g2.scoreid, text='2: ' + str(g2.scoreq))
         if g2.launched is True and g1.launched is False:
             last = 1
             canv.bind('<Button-1>', g1.fire2_start)
@@ -271,33 +272,37 @@ def new_game(event=''):
             for b in g1.balls:
                 b.move()
                 b.hittest(g2)
-                if not g1.live or not g2.live:
-                    canv.bind('<Button-1>', g1.idle)
-                    canv.bind('<ButtonRelease-1>', g1.idle)
-                    canv.bind('<Motion>', g1.idle)
-                    if not g1.live:
-                        canv.itemconfig(screen1, text='Игрок 2 победил за' + str(g2.bullet) + ' выстрелов')
-                        g2.score += 1
-                    elif not g2.live:
-                        canv.itemconfig(screen1, text='Игрок 1 победил за' + str(g1.bullet) + ' выстрелов')
-                        g1.score += 1
-                    g1.live = 0
-                    g2.live = 0
+            if not g1.live or not g2.live:
+                canv.bind('<Button-1>', g1.idle)
+                canv.bind('<ButtonRelease-1>', g1.idle)
+                canv.bind('<Motion>', g1.idle)
+                if not g1.live:
+                    canv.itemconfig(screen1, text='Игрок 2 победил за ' + str(g2.bullet) + ' выстрелов')
+                    g2.scoreq += 0.5
+                elif not g2.live:
+                    canv.itemconfig(screen1, text='Игрок 1 победил за ' + str(g1.bullet) + ' выстрелов')
+                    g1.scoreq += 0.5
+                g1.live = 0
+                canv.delete(g1.id)
+                g2.live = 0
+                canv.delete(g2.id)
             for b in g2.balls:
                 b.move()
                 b.hittest(g1)
-                if not g1.live or not g2.live:
-                    canv.bind('<Button-1>', g2.idle)
-                    canv.bind('<ButtonRelease-1>', g2.idle)
-                    canv.bind('<Motion>', g2.idle)
-                    if not g1.live:
-                        canv.itemconfig(screen1, text='Игрок 2 победил за' + str(g2.bullet) + ' выстрелов')
-                        g2.score += 1
-                    elif not g2.live:
-                        canv.itemconfig(screen1, text='Игрок 1 победил за' + str(g1.bullet) + ' выстрелов')
-                        g1.score += 1
-                    g1.live = 0
-                    g2.live = 0
+            if (not g1.live or not g2.live) and not (g1.live == 0 and g2.live == 0):
+                canv.bind('<Button-1>', g2.idle)
+                canv.bind('<ButtonRelease-1>', g2.idle)
+                canv.bind('<Motion>', g2.idle)
+                if not g1.live:
+                    canv.itemconfig(screen1, text='Игрок 2 победил за ' + str(g2.bullet) + ' выстрелов')
+                    g2.scoreq += 0.5
+                elif not g2.live:
+                    canv.itemconfig(screen1, text='Игрок 1 победил за ' + str(g1.bullet) + ' выстрелов')
+                    g1.scoreq += 0.5
+                g1.live = 0
+                canv.delete(g1.id)
+                g2.live = 0
+                canv.delete(g2.id)
             if g1.launched is True:
                 print('2')
                 g2.launched = False
@@ -311,33 +316,37 @@ def new_game(event=''):
             for b in g1.balls:
                 b.move()
                 b.hittest(g2)
-                if not g1.live or not g2.live:
-                    canv.bind('<Button-1>', g1.idle)
-                    canv.bind('<ButtonRelease-1>', g1.idle)
-                    canv.bind('<Motion>', g1.idle)
-                    if not g1.live:
-                        canv.itemconfig(screen1, text='Игрок 2 победил за ' + str(g2.bullet) + ' выстрелов')
-                        g2.score += 1
-                    elif not g2.live:
-                        canv.itemconfig(screen1, text='Игрок 1 победил за ' + str(g2.bullet) + ' выстрелов')
-                        g1.score += 1
-                    g1.live = 0
-                    g2.live = 0
+            if not g1.live or not g2.live:
+                canv.bind('<Button-1>', g1.idle)
+                canv.bind('<ButtonRelease-1>', g1.idle)
+                canv.bind('<Motion>', g1.idle)
+                if not g1.live:
+                    canv.itemconfig(screen1, text='Игрок 2 победил за ' + str(g2.bullet) + ' выстрелов')
+                    g2.scoreq += 0.5
+                elif not g2.live:
+                    canv.itemconfig(screen1, text='Игрок 1 победил за ' + str(g2.bullet) + ' выстрелов')
+                    g1.scoreq += 0.5
+                g1.live = 0
+                canv.delete(g1.id)
+                g2.live = 0
+                canv.delete(g2.id)
             for b in g2.balls:
                 b.move()
                 b.hittest(g1)
-                if not g1.live or not g2.live:
-                    canv.bind('<Button-1>', g2.idle)
-                    canv.bind('<ButtonRelease-1>', g2.idle)
-                    canv.bind('<Motion>', g2.idle)
-                    if not g1.live:
-                        canv.itemconfig(screen1, text='Игрок 2 победил за ' + str(g2.bullet) + ' выстрелов')
-                        g1.score += 1
-                    elif not g2.live:
-                        canv.itemconfig(screen1, text='Игрок 1 победил за ' + str(g2.bullet) + ' выстрелов')
-                        g2.score += 1
-                    g1.live = 0
-                    g2.live = 0
+            if not g1.live or not g2.live:
+                canv.bind('<Button-1>', g2.idle)
+                canv.bind('<ButtonRelease-1>', g2.idle)
+                canv.bind('<Motion>', g2.idle)
+                if not g1.live:
+                    canv.itemconfig(screen1, text='Игрок 2 победил за ' + str(g2.bullet) + ' выстрелов')
+                    g1.scoreq += 0.5
+                elif not g2.live:
+                    canv.itemconfig(screen1, text='Игрок 1 победил за ' + str(g2.bullet) + ' выстрелов')
+                    g2.scoreq += 0.5
+                g1.live = 0
+                canv.delete(g1.id)
+                g2.live = 0
+                canv.delete(g2.id)
             if g2.launched is True:
                 g1.launched = False
         if g1.launched is True and g2.launched is True:
@@ -351,9 +360,13 @@ def new_game(event=''):
     canv.delete(g1.id)
     for i in g1.balls:
         canv.delete(i.id)
+        g1.balls.remove(i)
     for i in g2.balls:
         canv.delete(i.id)
-    root.after(3000, new_game)
+        g2.balls.remove(i)
+    g1.bullet = 0
+    g2.bullet = 0
+    root.after(1000, new_game)
 
 
 ground_draw()
