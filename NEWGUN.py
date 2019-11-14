@@ -146,6 +146,7 @@ class Ball(Agent):
                 self.canvas.report_hit(self, t)
                 ids_hit.append(t_id)
                 t.destroy()
+
         return ids_hit
 
     def get_state(self):
@@ -187,7 +188,6 @@ class Gun(Agent):
     def start(self):
         self.bind_all()
         super().start()
-        print('c')
         self.canvas.create_targets()
 
     def play(self):
@@ -210,6 +210,10 @@ class Gun(Agent):
 
     def update(self):
         self.update_angle()
+        if (self.gun_coords[1] < 490) and (self.gun_coords[1] > 200):
+            self.gun_coords[1] += self.vy
+        else:
+            self.gun_coords[1] -= self.vy
         if self.f2_on == 1 and self.f2_power < 100:
             self.f2_power += 1
         self.redraw()
@@ -238,8 +242,11 @@ class Gun(Agent):
 
     def fire2_end(self, event):
         self.f2_on = 0
-        new_ball = Ball(app.main_frame.battlefield, 20, 450, self.f2_power * math.cos(self.an), -self.f2_power * math.sin(self.an))
+        new_ball = Ball(app.main_frame.battlefield, self.gun_coords[0], self.gun_coords[1], self.f2_power * math.cos(self.an), -self.f2_power * math.sin(self.an))
         self.f2_power = 10
+        #self.canvas.bullets.update({self.canvas.bullet_counter: new_ball})
+        #print(self.canvas.bullet_counter)
+
 
     def set_movement_direction_to_up(self, event):
         self.vy = -self.gun_velocity
@@ -360,11 +367,25 @@ class BattleField(tk.Canvas):
         self.catch_victory_job = None
         self.canvas_restart_job = None
 
-    def remove_targets(self, targets_to_remove=None):
-        pass  # TODO
+    def remove_targets(self, targets_to_remove):
+        #pass  # TODO
+        for t in targets_to_remove:
+            for key, item in self.targets.items():
+                if item is targets_to_remove:
+                    del self.targets[key]
+                    break
 
-    def remove_bullets(self, bullets_to_remove=None):
-        pass  # TODO
+
+    def remove_bullets(self, bullets_to_remove):
+        #pass  # TODO
+        for b in bullets_to_remove:
+            print(b)
+            for key, item in self.bullets.items():
+                for i in bullets_to_remove:
+                    print(i)
+                    if key == i:
+                        self.delete(item.id)
+
 
     def create_targets(self):
         for i in range(self.num_targets):
@@ -385,7 +406,6 @@ class BattleField(tk.Canvas):
             Ball(self, **state, job_init=job_init if job_active else None)
 
     def start(self):
-        print('b')
         self.catch_victory_job = self.after(DT, self.catch_victory)
         self.gun.start()
         for t in self.targets.values():
@@ -423,8 +443,9 @@ class BattleField(tk.Canvas):
         pass  # TODO
 
     def restart(self):
-        print('a')
-        self.start()  # TODO
+        self.itemconfig(self.victory_text_id, text = '')
+        self.create_targets()  # TODO
+        self.after(DT, self.catch_victory())
 
     def get_root(self):
         root = self.master
@@ -440,14 +461,23 @@ class BattleField(tk.Canvas):
         return [abs_x - canvas_x, abs_y - canvas_y]
 
     def show_victory_text(self):
-        pass  # TODO
+        #pass  # TODO
+        self.remove_targets([t for t in self.targets])
+        self.itemconfig(self.victory_text_id, text = 'won in ' + str(self.bullet_counter))
+        self.after(VICTORY_MSG_TIME, self.restart)
 
     def catch_victory(self):
         """Завершает раунда и показывает сколько выстрелов потребовалось,
         чтобы сбить цели.
         """
         if not self.targets:
-            pass  # TODO
+            #print('d')  # TODO
+            self.show_victory_text()
+            self.remove_bullets([b for b in self.bullets])
+            self.bullet_counter = 0
+            #print(self.bullets)
+            #print([b for b in self.bullets])
+            tk.Button(self, text = 'pwrqngkrbgrwbgirebvgjuervjp;')
         else:
             self.catch_victory_job = self.after(DT, self.catch_victory)
 
@@ -495,7 +525,8 @@ class MainFrame(tk.Frame):
     def new_game(self):
         self.score = 0
         self.score_label['text'] = self.score_tmpl.format(self.score)
-        self.battlefield.restart()
+        self.stop()
+        self.battlefield.start()
 
     def stop(self):
         self.battlefield.stop()
